@@ -26,20 +26,35 @@ movies_dataframe = cargar_peliculas()
 
 
 st.sidebar.header("Opciones")
-mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
+# Si se repiten los keys, no termina de cargar
+mostrar_todos = st.sidebar.checkbox(
+    "Mostrar todos los filmes", 
+    value=True, 
+    key="chk_mostrar"
+)
 
 #Buscar por titulo
-st.sidebar.subheader("Buscar filmes por titulo")
-titulo_buscar = st.sidebar.text_input("Título del filme :")
-btn_buscar = st.sidebar.button("Buscar filmes")
+btn_buscar = st.sidebar.button("Buscar filmes", key="btn_buscar")
+titulo_buscar = st.sidebar.text_input("Título del filme :", key="txt_buscar")
+btn_filtrar_director = st.sidebar.button("Filtrar director", key="btn_dir")
+
 
 # Para el filto de director
 st.sidebar.subheader("Seleccionar Director")
 
 # Cargar directores únicos y ordenados
+st.sidebar.subheader("Seleccionar Director")
 lista_directores = sorted(movies_dataframe["director"].dropna().unique())
-director_select = st.sidebar.selectbox("Director", lista_directores)
-btn_filtrar_director = st.sidebar.button("Filtrar director")
+
+director_select = st.sidebar.selectbox(
+    "Director", 
+    lista_directores,
+    key="sel_dir"
+)
+btn_filtrar_director = st.sidebar.button(
+    "Filtrar director",
+    key="btn_dir"
+)
 
 # Header principal
 st.header("Catalogo NETFLIX")
@@ -85,13 +100,22 @@ st.header("Catalogo NETFLIX")
 st.sidebar.header("Opciones")
 
 # Bandera para ver o quiar todos los filmes
-mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
+mostrar_todos = st.sidebar.checkbox(
+    "Mostrar todos los filmes", 
+    value=True,
+    key="chk_mostrar"
+)
 
 # Parte de la busqueda
 st.sidebar.subheader("Buscar filmes por título")
-titulo_buscar = st.sidebar.text_input("Título del filme :")
-btn_buscar = st.sidebar.button("Buscar filmes")
-
+titulo_buscar = st.sidebar.text_input(
+    "Título del filme :",
+    key="txt_buscar"
+)
+btn_buscar = st.sidebar.button(
+    "Buscar filmes", 
+    key="btn_buscar"
+)
 
 st.header("Catalogo NETFLIX")
 # Buequeda
