@@ -12,7 +12,7 @@ dbMovies = db.collection("movies")
 
 # Punto 5, inciso 1 - crear check box en el sidebar, para visualizar todos los filmes
 st.sidebar.header("Opciones")
-mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value= False)
+mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value= True)
 
 
 st.sidebar.subheader("Buscar filmes por título")
