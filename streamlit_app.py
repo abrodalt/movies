@@ -43,25 +43,3 @@ if mostrar_todos:
 
 
 
-
-
-"""
-index = st.text_input("Index")
-company = st.text_input("Company")
-director = st.text_input("Director")
-genre = st.text_input("Genre")
-name = st.text_input("Name")
-submit = st.button("Crear nuevo registro")
-
-if index and company and director and genre and name and submit:
-    doc_ref = db.collection("movies").document(index)
-    doc_ref.set({
-        "company": company,
-        "director": director,
-        "genre": genre,
-        "name": name
-    })
-    st.success("Registro creado exitosamente")
-
-
-"""
