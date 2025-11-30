@@ -68,6 +68,40 @@ elif btn_filtrar_director:
     st.write(f"Total filmes: {len(filtro_director)}")
     st.dataframe(filtro_director)
 
+
+st.sidebar.subheader("Nuevo filme")
+with st.sidebar.form("form_nuevo_filme"):
+    nuevo_name = st.text_input("Name:", key="new_name")
+
+    # Selectbox de compañías
+    lista_companias = sorted(movies_dataframe["company"].dropna().unique())
+    nuevo_company = st.selectbox("Company", lista_companias, key="new_company")
+
+    # Selectbox de directores
+    lista_directores = sorted(movies_dataframe["director"].dropna().unique())
+    nuevo_director = st.selectbox("Director", lista_directores, key="new_director")
+
+    # Selectbox de géneros
+    lista_generos = sorted(movies_dataframe["genre"].dropna().unique())
+    nuevo_genre = st.selectbox("Genre", lista_generos, key="new_genre")
+
+    submit_nuevo = st.form_submit_button("Crear nuevo filme")
+
+if submit_nuevo:
+    if nuevo_name.strip() != "":
+        db.collection("movies").add({
+            "name": nuevo_name,
+            "company": nuevo_company,
+            "director": nuevo_director,
+            "genre": nuevo_genre
+        })
+        st.sidebar.success("Filme creado correctamente")
+    else:
+        st.sidebar.error("El nombre no puede estar vacío.")
+
+
+
+
 elif mostrar_todos:
     st.header("Todos los filmes")
     st.dataframe(movies_dataframe)
