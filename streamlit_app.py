@@ -15,17 +15,35 @@ st.sidebar.header("Opciones")
 mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
 
 
+st.sidebar.subheader("Buscar filmes por título")
+titulo_buscar = st.sidebar.text_input("Título del filme :")
+btn_buscar = st.sidebar.button("Buscar filmes")
+
 # Cargo los datos
 st.header("Catalogo NETFLIX")
 movies_ref = list(db.collection(u'movies').stream())
 movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
 movies_dataframe = pd.DataFrame(movies_dict)
 
+# Aplicar busqueda por titulo, 
+if btn_buscar and titulo_buscar.strip() != "":
+    filtro = movies_dataframe[
+        movies_dataframe["name"].str.contains(titulo_buscar, case=False, na=False)
+    ]
+
+    st.header(f"Resultados de búsqueda: '{titulo_buscar}'")
+    st.dataframe(filtro)
 
 
+# Ocultar o mostar el dataframe
 if mostrar_todos:
     st.header("Todos los filmes")
     st.dataframe(movies_dataframe)
+
+
+
+
+
 
 """
 index = st.text_input("Index")
