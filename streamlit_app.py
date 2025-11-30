@@ -10,6 +10,11 @@ db = firestore.Client(credentials=creds, project=key_dict["project_id"])
 
 dbMovies = db.collection("movies")
 
+# Punto 5, inciso 1 - crear check box en el sidebar, para visualizar todos los filmes
+st.sidebar.header("Opciones")
+mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
+
+
 
 st.header("Catalogo NETFLIX")
 movies_ref = list(db.collection(u'movies').stream())
