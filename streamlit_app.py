@@ -20,7 +20,7 @@ titulo_buscar = st.sidebar.text_input("Título del filme :")
 btn_buscar = st.sidebar.button("Buscar filmes")
 
 # Cargo los datos
-st.header("Catalogo NETFLIX")
+st.header("Catalogo NEIFLIS")
 movies_ref = list(db.collection(u'movies').stream())
 movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
 movies_dataframe = pd.DataFrame(movies_dict)
