@@ -8,14 +8,14 @@ key_dict = st.secrets["firebase"]
 creds = service_account.Credentials.from_service_account_info(dict(key_dict))
 db = firestore.Client(credentials=creds, project=key_dict["project_id"])
 
-dbNames = db.collection("movies")
+dbMovies = db.collection("movies")
 
 
 st.header("Catalogo NETFLIX")
-names_ref = list(db.collection(u'names').stream())
-names_dict = list(map(lambda x: x.to_dict(), names_ref))
-names_dataframe = pd.DataFrame(names_dict)
-st.dataframe(names_dataframe)
+movies_ref = list(db.collection(u'movies').stream())
+movies_dict = list(map(lambda x: x.to_dict(), names_ref))
+movies_dataframe = pd.DataFrame(names_dict)
+st.dataframe(movies_dataframe)
 
 """
 index = st.text_input("Index")
