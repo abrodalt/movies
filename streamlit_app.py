@@ -19,27 +19,54 @@ st.sidebar.subheader("Buscar filmes por título")
 titulo_buscar = st.sidebar.text_input("Título del filme :")
 btn_buscar = st.sidebar.button("Buscar filmes")
 
-# Cargo los datos
-st.header("Catalogo NEIFLIS")
-movies_ref = list(db.collection(u'movies').stream())
-movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
-movies_dataframe = pd.DataFrame(movies_dict)
 
-# Aplicar busqueda por titulo, 
+st.header("Catalogo NETFLIX")
+
+# Cargo los datos
+@st.cache_data
+def cargar_peliculas():
+    movies_ref = list(db.collection(u'movies').stream())
+    movies_dict = [x.to_dict() for x in movies_ref]
+
+    df = pd.DataFrame(movies_dict)
+    df.columns = df.columns.str.strip().str.lower()
+    return df
+
+# Se carga desde cache o si no firebase bloquea por cuotas excedidas 
+movies_dataframe = cargar_peliculas()
+
+
+st.sidebar.header("Opciones")
+
+# Bandera para ver o quiar todos los filmes
+mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
+
+# Parte de la busqueda
+st.sidebar.subheader("Buscar filmes por título")
+titulo_buscar = st.sidebar.text_input("Título del filme :")
+btn_buscar = st.sidebar.button("Buscar filmes")
+
+
+st.header("Catalogo NETFLIX")
+# Buequeda
 if btn_buscar and titulo_buscar.strip() != "":
     filtro = movies_dataframe[
-        movies_dataframe["name"].str.contains(titulo_buscar, case=False, na=False)
+        movies_dataframe["name"].str.contains(
+            titulo_buscar.strip(),
+            case=False,
+            na=False
+        )
     ]
 
     st.header(f"Resultados de búsqueda: '{titulo_buscar}'")
     st.dataframe(filtro)
 
 
-# Ocultar o mostar el dataframe
-if mostrar_todos:
+
+
+
+
+
+elif mostrar_todos:
     st.header("Todos los filmes")
     st.dataframe(movies_dataframe)
-
-
-
-
