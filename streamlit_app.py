@@ -14,13 +14,16 @@ dbMovies = db.collection("movies")
 st.sidebar.header("Opciones")
 mostrar_todos = st.sidebar.checkbox("Mostrar todos los filmes", value=True)
 
-
-
 st.header("Catalogo NETFLIX")
 movies_ref = list(db.collection(u'movies').stream())
 movies_dict = list(map(lambda x: x.to_dict(), movies_ref))
 movies_dataframe = pd.DataFrame(movies_dict)
 st.dataframe(movies_dataframe)
+
+
+if mostrar_todos:
+    st.header("Todos los filmes")
+    st.dataframe(movies_dataframe)
 
 """
 index = st.text_input("Index")
