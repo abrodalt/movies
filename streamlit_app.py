@@ -96,6 +96,10 @@ if submit_nuevo:
             "genre": nuevo_genre
         })
         st.sidebar.success("Filme creado correctamente")
+        # Borro cache y recargo, caso contrario cualquier nuevo registro nunca sera encontrado
+        st.cache_data.clear()
+        st.experimental_rerun()
+
     else:
         st.sidebar.error("El nombre no puede estar vacío.")
 
@@ -106,4 +110,4 @@ elif mostrar_todos:
     st.header("Todos los filmes")
     st.dataframe(movies_dataframe)
 
-    
+
