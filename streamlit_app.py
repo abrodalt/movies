@@ -98,7 +98,8 @@ if submit_nuevo:
         st.sidebar.success("Filme creado correctamente")
         # Borro cache y recargo, caso contrario cualquier nuevo registro nunca sera encontrado
         st.cache_data.clear()
-        st.experimental_rerun()
+        st.rerun()
+
 
     else:
         st.sidebar.error("El nombre no puede estar vacío.")
